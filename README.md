@@ -174,6 +174,54 @@ Environment variables (can be set in `launch.sh`):
 - macOS with Apple Silicon (M1/M2/M3)
 - ~16GB RAM recommended for Holo 1.5 7B model
 
+## Performance Benchmarks
+
+### Test Environment
+
+**Hardware:**
+- **Model:** Mac Studio (Mac14,13)
+- **Chip:** Apple M2 Max
+- **CPU Cores:** 12 (8 performance + 4 efficiency)
+- **Memory:** 32 GB
+- **GPU:** Apple M2 Max (38-core)
+
+**Software:**
+- **OS:** macOS 15.7.1 (Sequoia)
+- **Python:** 3.13.5
+- **PyTorch:** 2.9.0
+- **Transformers:** 4.57.1
+- **CUDA/ROCm:** Not applicable (MPS backend)
+
+### Measured Performance
+
+Results from 10-run benchmarks (+ 1 warmup, discarded):
+
+#### Text-Only Inference
+```
+Prompt: "Say hello in one sentence."
+Average Latency: 511 ms
+Throughput: 17.6 tokens/sec
+Std Deviation: 6.9 ms (very stable)
+```
+
+#### Image + Text Inference
+```
+Prompt: "What do you see in this image?" + cat_image.jpg
+Average Latency: 21,980 ms (~22 seconds)
+P50 (Median): 21,462 ms
+P90: 29,596 ms
+Throughput: 0.68 tokens/sec
+Avg Output: 15 tokens
+```
+
+**Notes:**
+- Image inference includes vision encoding (1849 image tokens processed)
+- Text-only is highly consistent (low stdev)
+- Performance scales with `HOLO_MAX_SIDE` setting (default: 1440px)
+- First request (warmup) typically ~1500ms, subsequent requests ~500ms
+
+See `bench_report.md` and `bench_results.csv` for detailed measurements.
+
 ## Troubleshooting
 
 ### Port already in use

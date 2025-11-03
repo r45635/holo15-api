@@ -3,14 +3,27 @@
 **Generated:** 2025-11-02 19:09:10  
 **Hostname:** vincents-Mac-Studio.local
 
-## Environment
+## Hardware Configuration
+
+| Component | Specification |
+|-----------|--------------|
+| **Model** | Mac Studio (Mac14,13) |
+| **Chip** | Apple M2 Max |
+| **CPU Cores** | 12 (8 performance + 4 efficiency) |
+| **GPU Cores** | 38 (integrated with M2 Max) |
+| **Memory** | 32 GB unified memory |
+| **Architecture** | ARM64 (Apple Silicon) |
+
+## Software Environment
 
 | Property | Value |
 |----------|-------|
-| OS | Darwin 24.6.0 |
-| Python | 3.13.5 |
-| PyTorch | 2.9.0 |
-| Transformers | 4.57.1 |
+| **OS** | macOS 15.7.1 (Sequoia, Darwin 24.6.0) |
+| **Python** | 3.13.5 |
+| **PyTorch** | 2.9.0 |
+| **Transformers** | 4.57.1 |
+| **Compute Backend** | MPS (Metal Performance Shaders) |
+| **Precision** | float16 |
 
 ## Configuration
 
