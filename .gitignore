@@ -1,3 +1,28 @@
+# Python
 .venv/
+venv/
 __pycache__/
 *.pyc
+*.py[cod]
+*$py.class
+*.so
+
+# Benchmark results (keep track of them)
+# bench_results.csv
+# bench_report.md
+
+# Backup and old files
+*_old.*
+*_backup.*
+*.bak
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
