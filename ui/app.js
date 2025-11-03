@@ -188,6 +188,19 @@ async function sendMessage() {
     
     try {
         // Make API request
+        console.log('Sending request to:', `${baseUrl}/chat/completions`);
+        console.log('Request body:', {
+            model: model,
+            messages: [
+                {
+                    role: 'user',
+                    content: content
+                }
+            ],
+            max_tokens: maxTokens,
+            temperature: temperature
+        });
+        
         const response = await fetch(`${baseUrl}/chat/completions`, {
             method: 'POST',
             headers: {
@@ -208,13 +221,17 @@ async function sendMessage() {
         
         removeLoadingMessage();
         
+        console.log('Response status:', response.status);
+        
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
+            console.error('Error response:', errorData);
             const errorMsg = errorData.detail || errorData.error?.message || `HTTP ${response.status}: ${response.statusText}`;
             throw new Error(errorMsg);
         }
         
         const data = await response.json();
+        console.log('Response data:', data);
         
         // Extract assistant's reply
         const reply = data.choices?.[0]?.message?.content || '(empty response)';
