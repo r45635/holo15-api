@@ -25,4 +25,23 @@ __pycache__/
 
 # Logs
 *.log
+logs/
+
+# Security sensitive files
+.env
+ops/api_keys.yaml
+ops/denylist.json
+*.pem
+*.key
+*.crt
+
+# Model weights (too large for git)
+models/
+*.safetensors
+*.bin
+*.gguf
+
+# Docker volumes
+data/
+volumes/
 

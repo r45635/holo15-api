@@ -13,6 +13,7 @@ const dropZone = document.getElementById('dropZone');
 
 // Config inputs
 const baseUrlInput = document.getElementById('baseUrl');
+const apiKeyInput = document.getElementById('apiKey');
 const modelInput = document.getElementById('model');
 const maxTokensInput = document.getElementById('maxTokens');
 const temperatureInput = document.getElementById('temperature');
@@ -21,6 +22,30 @@ const temperatureInput = document.getElementById('temperature');
 init();
 
 function init() {
+    // Check if all required elements exist
+    if (!chatContainer || !promptInput || !sendButton || !imageButton || 
+        !fileInput || !imagePreview || !dropZone || !baseUrlInput || 
+        !apiKeyInput || !modelInput || !maxTokensInput || !temperatureInput) {
+        console.error('Missing required DOM elements!');
+        console.error({
+            chatContainer: !!chatContainer,
+            promptInput: !!promptInput,
+            sendButton: !!sendButton,
+            imageButton: !!imageButton,
+            fileInput: !!fileInput,
+            imagePreview: !!imagePreview,
+            dropZone: !!dropZone,
+            baseUrlInput: !!baseUrlInput,
+            apiKeyInput: !!apiKeyInput,
+            modelInput: !!modelInput,
+            maxTokensInput: !!maxTokensInput,
+            temperatureInput: !!temperatureInput
+        });
+        return;
+    }
+    
+    console.log('✅ UI initialized successfully');
+    
     // Event listeners
     sendButton.addEventListener('click', sendMessage);
     imageButton.addEventListener('click', () => fileInput.click());
@@ -158,9 +183,17 @@ async function sendMessage() {
     
     // Get config values
     const baseUrl = baseUrlInput.value.trim();
+    const apiKey = apiKeyInput.value.trim();
     const model = modelInput.value.trim();
     const maxTokens = parseInt(maxTokensInput.value);
     const temperature = parseFloat(temperatureInput.value);
+    
+    // Validate API key
+    if (!apiKey) {
+        addMessage('error', '⚠️ Please enter your API key in the configuration above.');
+        sendButton.disabled = false;
+        return;
+    }
     
     // Build message content
     let content;
@@ -205,6 +238,7 @@ async function sendMessage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
                 model: model,

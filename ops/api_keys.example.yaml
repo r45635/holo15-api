@@ -1,0 +1,30 @@
+# API Keys Configuration
+# Format: YAML with bcrypt-hashed keys
+# Generate new keys with: python scripts/generate_api_key.py
+
+keys:
+  - key_id: "team-core"
+    hash: "$2b$12$ExampleHashReplaceWithRealHashGeneratedByScript"
+    owner: "core-team@example.com"
+    scopes: ["chat:read", "chat:write"]
+    created_at: "2025-01-01T00:00:00Z"
+    expires_at: "2026-01-01T00:00:00Z"
+  
+  - key_id: "partner-readonly"
+    hash: "$2b$12$AnotherExampleHashReplaceWithRealOne"
+    owner: "partner@example.com"
+    scopes: ["chat:read"]
+    created_at: "2025-01-01T00:00:00Z"
+    expires_at: "2025-12-31T23:59:59Z"
+
+# Scopes:
+# - chat:read  - Can call /v1/chat/completions (read-only inference)
+# - chat:write - Reserved for future write operations
+# - *          - All scopes (admin)
+
+# Security notes:
+# - Never commit real API keys or their plain-text versions to git
+# - Store this file securely (not in public repos)
+# - Rotate keys regularly
+# - Use strong random strings (32+ chars, alphanumeric + symbols)
+# - Set reasonable expiration dates
