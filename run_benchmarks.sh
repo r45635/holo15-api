@@ -1,9 +1,9 @@
 #!/bin/bash
 # Quick test script to run benchmarks once server is ready
 
-# Try both localhost addresses
+# Try both common localhost addresses (some systems prefer one over the other)
 SERVER_URL="http://127.0.0.1:8000"
-ALT_SERVER_URL="http://localhost:8000"
+ALT_SERVER_URL="http://127.0.0.1:8000"
 
 echo "Waiting for server to be ready..."
 SERVER_READY=false

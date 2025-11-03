@@ -88,8 +88,8 @@ app.add_middleware(
 ### Server Not Found
 
 - Check that the API server is running on port 8000
-- Verify the **API Base URL** in the UI header matches your server
-- Try using `http://localhost:8000/v1` instead of `127.0.0.1`
+- Verify the **API Base URL** in the UI header matches your server (should be `http://127.0.0.1:8000/v1`)
+- Both 127.0.0.1 and localhost should work due to CORS configuration
 
 ### Image Not Uploading
 

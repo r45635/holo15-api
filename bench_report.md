@@ -29,7 +29,7 @@
 
 | Parameter | Value |
 |-----------|-------|
-| Server | `http://localhost:8000` |
+| Server | `http://127.0.0.1:8000` |
 | Model | `Hcompany/Holo1.5-7B` |
 | Workload | Image + Text |
 | Runs | 10 (+ 1 warmup) |
