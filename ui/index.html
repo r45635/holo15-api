@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holo 1.5 Chat UI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header with configuration -->
+        <header class="config-header">
+            <h1>🤖 Holo 1.5 Chat</h1>
+            <div class="config-row">
+                <div class="config-item">
+                    <label for="baseUrl">API Base URL:</label>
+                    <input type="text" id="baseUrl" value="http://127.0.0.1:8000/v1">
+                </div>
+                <div class="config-item">
+                    <label for="model">Model:</label>
+                    <input type="text" id="model" value="Hcompany/Holo1.5-7B">
+                </div>
+                <div class="config-item">
+                    <label for="maxTokens">Max Tokens:</label>
+                    <input type="number" id="maxTokens" value="128" min="1" max="2048">
+                </div>
+                <div class="config-item">
+                    <label for="temperature">Temperature:</label>
+                    <input type="number" id="temperature" value="0.0" min="0" max="2" step="0.1">
+                </div>
+            </div>
+        </header>
+
+        <!-- Chat transcript area -->
+        <div class="chat-container" id="chatContainer">
+            <div class="message system-message">
+                <div class="message-content">
+                    👋 Welcome! Send a text prompt or attach an image to get started.
+                </div>
+            </div>
+        </div>
+
+        <!-- Input area -->
+        <div class="input-area">
+            <div class="image-preview" id="imagePreview"></div>
+            <div class="input-row">
+                <textarea 
+                    id="promptInput" 
+                    placeholder="Type your message here... (Cmd/Ctrl+Enter to send)"
+                    rows="3"
+                ></textarea>
+                <div class="button-group">
+                    <button id="imageButton" class="icon-button" title="Attach image">
+                        🖼️ Image
+                    </button>
+                    <button id="sendButton" class="send-button">
+                        Send ➤
+                    </button>
+                </div>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <div class="drop-zone" id="dropZone">
+                📎 Drop an image here or click "Image" button
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

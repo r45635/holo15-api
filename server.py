@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Any, Optional
 from PIL import Image
@@ -8,6 +9,20 @@ import torch
 from transformers import AutoProcessor, AutoModelForImageTextToText
 
 app = FastAPI(title="Holo 1.5 Local API")
+
+# ==== CORS Middleware ====
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "http://127.0.0.1:8080",
+        "http://localhost:8080",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ==== Config ====
 MODEL_ID = os.environ.get("HOLO_MODEL", "Hcompany/Holo1.5-7B")
