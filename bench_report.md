@@ -1,7 +1,7 @@
 # Holo 1.5 Benchmark Report
 
 **Generated:** 2025-11-02 19:09:10  
-**Hostname:** vincents-Mac-Studio.local
+**Hostname:** Mac-Studio.local
 
 ## Hardware Configuration
 
@@ -29,7 +29,7 @@
 
 | Parameter | Value |
 |-----------|-------|
-| Server | `http://vincents-Mac-Studio.local:8000` |
+| Server | `http://localhost:8000` |
 | Model | `Hcompany/Holo1.5-7B` |
 | Workload | Image + Text |
 | Runs | 10 (+ 1 warmup) |

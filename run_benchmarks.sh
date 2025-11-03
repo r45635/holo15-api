@@ -3,7 +3,7 @@
 
 # Try both localhost addresses
 SERVER_URL="http://127.0.0.1:8000"
-ALT_SERVER_URL="http://vincents-Mac-Studio.local:8000"
+ALT_SERVER_URL="http://localhost:8000"
 
 echo "Waiting for server to be ready..."
 SERVER_READY=false

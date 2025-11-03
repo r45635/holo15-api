@@ -10,7 +10,7 @@ from pathlib import Path
 import os
 
 # Configuration
-BASE_URL = os.environ.get("API_URL", "http://vincents-Mac-Studio.local:8000")
+BASE_URL = os.environ.get("API_URL", "http://localhost:8000")
 
 def test_health():
     """Test the health endpoint"""
