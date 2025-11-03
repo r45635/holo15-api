@@ -139,10 +139,12 @@ Environment variables (can be set in `launch.sh`):
 
 - `HOLO_MODEL`: Model ID (default: `Hcompany/Holo1.5-7B`)
 - `HOLO_MAX_SIDE`: Max image dimension in pixels (default: `1440`)
-- `HOST`: Server host (default: `127.0.0.1`)
-- `PORT`: Server port (default: `8000`)
+- `HOLO_HOST`: Server host (default: `127.0.0.1`)
+- `HOLO_PORT`: Server port (default: `8000`)
 - `PYTORCH_ENABLE_MPS_FALLBACK`: Enable MPS fallback (default: `1`)
 - `PYTORCH_MPS_HIGH_WATERMARK_RATIO`: MPS memory management (default: `0.0`)
+
+**Note**: Use `HOLO_HOST` and `HOLO_PORT` instead of `HOST` and `PORT` to avoid conflicts with system environment variables.
 
 ## Architecture
 

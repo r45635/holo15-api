@@ -6,8 +6,9 @@
 set -e
 
 PROJECT_DIR="${PROJECT_DIR:-$HOME/Projects/holo15-api}"
-HOST="${HOST:-127.0.0.1}"
-PORT="${PORT:-8000}"
+# Use HOLO_HOST to avoid conflicts with system HOST variable
+HOLO_HOST="${HOLO_HOST:-127.0.0.1}"
+HOLO_PORT="${HOLO_PORT:-8000}"
 
 # Best defaults for Apple Silicon + MPS
 export PYTORCH_ENABLE_MPS_FALLBACK="${PYTORCH_ENABLE_MPS_FALLBACK:-1}"
@@ -30,9 +31,9 @@ else
 fi
 
 # Check if port is already in use
-if lsof -Pi :$PORT -sTCP:LISTEN -t >/dev/null 2>&1 ; then
-  PID=$(lsof -ti:$PORT)
-  echo "⚠️  Port $PORT is already in use by process $PID"
+if lsof -Pi :$HOLO_PORT -sTCP:LISTEN -t >/dev/null 2>&1 ; then
+  PID=$(lsof -ti:$HOLO_PORT)
+  echo "⚠️  Port $HOLO_PORT is already in use by process $PID"
   echo "💡 To kill the process and free the port, run:"
   echo "   kill -9 $PID"
   echo ""
@@ -43,11 +44,11 @@ if lsof -Pi :$PORT -sTCP:LISTEN -t >/dev/null 2>&1 ; then
     kill -9 $PID
     sleep 1
   else
-    echo "❌ Aborted. Please free port $PORT manually or use a different port."
+    echo "❌ Aborted. Please free port $HOLO_PORT manually or use a different port."
     exit 1
   fi
 fi
 
-echo "🚀 Starting Holo 1.5 API on http://$HOST:$PORT ..."
+echo "🚀 Starting Holo 1.5 API on http://$HOLO_HOST:$HOLO_PORT ..."
 # NOTE: No --loop uvloop and no --http httptools (not available on Python 3.13 yet)
-exec uvicorn server:app --host "$HOST" --port "$PORT" --no-access-log
+exec uvicorn server:app --host "$HOLO_HOST" --port "$HOLO_PORT" --no-access-log
