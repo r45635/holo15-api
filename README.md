@@ -10,6 +10,13 @@ Minimal local API to serve the **Hcompany/Holo1.5-7B** vision-language model on 
 - ✅ Runs on Apple Silicon MPS (GPU acceleration)
 - ✅ No "Image features and image tokens do not match" errors
 - ✅ Automatic port conflict detection and resolution
+- 🔐 **Production-ready security** (API keys, rate limiting, abuse detection)
+
+## 📚 Documentation
+
+- **[README_SECURITY.md](README_SECURITY.md)** - Production deployment with security (API keys, rate limiting, monitoring)
+- **[docs/SECURITY.md](docs/SECURITY.md)** - Complete security guide and best practices
+- **API Client Examples** - See README_SECURITY.md for Python, JavaScript, cURL examples
 
 ## Quick Setup
 
