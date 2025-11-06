@@ -40,6 +40,7 @@ LOCAL_CREDENTIALS.md
 CREDENTIALS.md
 *_PRIVATE.md
 *_credentials.md
+.QUICK_REF
 
 # Quick test scripts with embedded credentials
 quick_test.sh
