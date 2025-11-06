@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+"""
+Quick Python example template
+Copy this to quick_example.py and add your API key!
+
+Usage:
+1. cp quick_example.py.template quick_example.py
+2. Edit quick_example.py and replace YOUR_API_KEY_HERE
+3. python quick_example.py
+"""
+import requests
+import json
+import sys
+
+# Configuration - REPLACE WITH YOUR VALUES
+API_URL = "http://127.0.0.1:8000"
+API_KEY = "YOUR_API_KEY_HERE"  # Get this from: python scripts/generate_api_key.py
+
+def check_config():
+    """Verify configuration before running"""
+    if API_KEY == "YOUR_API_KEY_HERE":
+        print("\n❌ API Key not configured!")
+        print("\nSteps to use this example:")
+        print("1. Generate an API key:")
+        print("   python scripts/generate_api_key.py")
+        print("\n2. Copy this template:")
+        print("   cp quick_example.py.template quick_example.py")
+        print("\n3. Edit quick_example.py and set your API_KEY")
+        print("\n4. Run:")
+        print("   python quick_example.py")
+        sys.exit(1)
+
+def test_simple_chat():
+    """Test simple text chat"""
+    print("\n🤖 Testing simple chat...")
+    print("=" * 50)
+    
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "model": "Hcompany/Holo1.5-7B",
+        "messages": [
+            {"role": "user", "content": "Explique-moi l'IA en une phrase"}
+        ],
+        "max_tokens": 150,
+        "temperature": 0.7
+    }
+    
+    try:
+        response = requests.post(
+            f"{API_URL}/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            content = result["choices"][0]["message"]["content"]
+            print(f"✅ Response:\n{content}\n")
+            return True
+        else:
+            print(f"❌ Error {response.status_code}: {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Exception: {e}")
+        return False
+
+def test_with_context():
+    """Test chat with context"""
+    print("\n💬 Testing chat with context...")
+    print("=" * 50)
+    
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+    
+    # Conversation with context
+    messages = [
+        {"role": "user", "content": "Quelle est la capitale de la France?"},
+        {"role": "assistant", "content": "Paris"},
+        {"role": "user", "content": "Et combien d'habitants?"}
+    ]
+    
+    payload = {
+        "model": "Hcompany/Holo1.5-7B",
+        "messages": messages,
+        "max_tokens": 100
+    }
+    
+    try:
+        response = requests.post(
+            f"{API_URL}/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            content = result["choices"][0]["message"]["content"]
+            print(f"✅ Response:\n{content}\n")
+            return True
+        else:
+            print(f"❌ Error: {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Exception: {e}")
+        return False
+
+def test_health():
+    """Test health endpoint"""
+    print("\n🏥 Testing health endpoint...")
+    print("=" * 50)
+    
+    try:
+        response = requests.get(f"{API_URL}/health", timeout=5)
+        
+        if response.status_code == 200:
+            health = response.json()
+            print("✅ Server is healthy:")
+            print(f"   Status: {health['status']}")
+            print(f"   Device: {health['device']}")
+            print(f"   Model: {health['model']}")
+            print(f"   Version: {health['version']}\n")
+            return True
+        else:
+            print(f"❌ Health check failed: {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Cannot connect to server: {e}")
+        print("   Make sure the server is running: ./launch_secure.sh")
+        return False
+
+def test_metrics():
+    """Test metrics endpoint"""
+    print("\n📊 Testing metrics endpoint...")
+    print("=" * 50)
+    
+    headers = {
+        "Authorization": f"Bearer {API_KEY}"
+    }
+    
+    try:
+        response = requests.get(
+            f"{API_URL}/metrics",
+            headers=headers,
+            timeout=5
+        )
+        
+        if response.status_code == 200:
+            metrics = response.json()
+            print("✅ Metrics:")
+            print(f"   Total requests: {metrics.get('requests_total', 0)}")
+            print(f"   Success (2xx): {metrics.get('requests_2xx', 0)}")
+            print(f"   Errors (4xx): {metrics.get('requests_4xx', 0)}")
+            print(f"   Errors (5xx): {metrics.get('requests_5xx', 0)}")
+            print(f"   Latency P50: {metrics.get('latency_p50_ms', 0):.2f} ms")
+            print(f"   Latency P95: {metrics.get('latency_p95_ms', 0):.2f} ms\n")
+            return True
+        else:
+            print(f"❌ Error: {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Exception: {e}")
+        return False
+
+def main():
+    """Run all examples"""
+    print("\n" + "="*50)
+    print("🚀 Holo 1.5 API - Quick Python Examples")
+    print("="*50)
+    
+    # Check config first
+    check_config()
+    
+    # Test health first
+    if not test_health():
+        print("\n⚠️  Server not running. Start with: ./launch_secure.sh")
+        return
+    
+    # Run tests
+    results = []
+    results.append(("Simple Chat", test_simple_chat()))
+    results.append(("Context Chat", test_with_context()))
+    results.append(("Metrics", test_metrics()))
+    
+    # Summary
+    print("\n" + "="*50)
+    print("📋 Summary")
+    print("="*50)
+    passed = sum(1 for _, r in results if r)
+    total = len(results)
+    
+    for name, result in results:
+        status = "✅" if result else "❌"
+        print(f"{status} {name}")
+    
+    print(f"\n{passed}/{total} tests passed")
+    print("="*50)
+
+if __name__ == "__main__":
+    main()

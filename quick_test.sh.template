@@ -1,0 +1,64 @@
+#!/bin/bash
+# Quick test script template
+# Copy this to quick_test.sh and add your API key
+
+echo "🧪 Quick Test - Holo 1.5 API"
+echo "=============================="
+echo ""
+
+API_URL="http://127.0.0.1:8000"
+API_KEY="YOUR_API_KEY_HERE"  # Replace with your actual API key
+
+# Check if API key is set
+if [ "$API_KEY" = "YOUR_API_KEY_HERE" ]; then
+    echo "❌ Please edit this file and set your API_KEY"
+    echo ""
+    echo "1. Copy this template: cp quick_test.sh.template quick_test.sh"
+    echo "2. Edit quick_test.sh and replace YOUR_API_KEY_HERE with your actual key"
+    echo "3. Run: ./quick_test.sh"
+    exit 1
+fi
+
+# Check if server is running
+echo "1. Checking server status..."
+if curl -s "$API_URL/health" > /dev/null 2>&1; then
+    echo "   ✅ Server is running"
+    curl -s "$API_URL/health" | jq '.'
+else
+    echo "   ❌ Server not running!"
+    echo "   Start with: ./launch_secure.sh"
+    exit 1
+fi
+
+echo ""
+echo "2. Testing simple text request..."
+response=$(curl -s -X POST "$API_URL/v1/chat/completions" \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "Hcompany/Holo1.5-7B",
+    "messages": [{"role": "user", "content": "Say hello in one word"}],
+    "max_tokens": 10
+  }')
+
+if echo "$response" | jq -e '.choices[0].message.content' > /dev/null 2>&1; then
+    echo "   ✅ Request successful"
+    echo "   Response: $(echo "$response" | jq -r '.choices[0].message.content')"
+else
+    echo "   ❌ Request failed"
+    echo "$response" | jq '.'
+fi
+
+echo ""
+echo "3. Checking metrics..."
+curl -s "$API_URL/metrics" \
+  -H "Authorization: Bearer $API_KEY" | jq '{requests_total, requests_2xx, latency_p50_ms}'
+
+echo ""
+echo "=============================="
+echo "✅ Quick test complete!"
+echo ""
+echo "More tests:"
+echo "  - Full security tests: python test_security.py"
+echo "  - Client examples: python test_api_client.py"
+echo "  - Web UI: cd ui && python -m http.server 5500"
