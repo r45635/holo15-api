@@ -35,6 +35,12 @@ ops/denylist.json
 *.key
 *.crt
 
+# Local credentials and private notes
+LOCAL_CREDENTIALS.md
+CREDENTIALS.md
+*_PRIVATE.md
+*_credentials.md
+
 # Model weights (too large for git)
 models/
 *.safetensors
