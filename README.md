@@ -14,9 +14,23 @@ Minimal local API to serve the **Hcompany/Holo1.5-7B** vision-language model on 
 
 ## 📚 Documentation
 
+### 🚀 Getting Started
+- **[QUICK_START.md](QUICK_START.md)** - ⭐ Start here! Quick installation and usage guide
+
+### 🔐 Production & Security
 - **[README_SECURITY.md](README_SECURITY.md)** - Production deployment with security (API keys, rate limiting, monitoring)
 - **[docs/SECURITY.md](docs/SECURITY.md)** - Complete security guide and best practices
-- **API Client Examples** - See README_SECURITY.md for Python, JavaScript, cURL examples
+
+### 💻 API Client Examples
+- **Python** - See README_SECURITY.md for `requests` and `OpenAI SDK` examples
+- **JavaScript/Node.js** - See README_SECURITY.md for `fetch` examples
+- **cURL** - Command-line examples throughout documentation
+- **Images** - Base64 encoding examples for vision tasks
+
+### 🧪 Testing
+- `test_security.py` - Security tests (7 tests)
+- `test_api_client.py` - Client examples validation (6 tests)
+- `test_curl.sh` - Quick curl-based tests
 
 ## Quick Setup
 
